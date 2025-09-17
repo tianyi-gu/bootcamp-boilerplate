@@ -1,13 +1,12 @@
 import express from 'express';
-import { getDb } from './connect.js';
+import { getDb } from './ExampleConnect.js';
 import { ObjectId } from 'mongodb';
 
 let expressRouter = express.Router()
 
-
 expressRouter.route("/").get(async (request, response) =>{
     let db = getDb()
-    let data = await db.collection("notes").find({}).toArray()
+    let data = await db.collection("pets").find({}).toArray()
     if (data.length > 0){
         response.json(data)
     }
@@ -18,7 +17,7 @@ expressRouter.route("/").get(async (request, response) =>{
 
 expressRouter.route("/:id").get(async (request, response) =>{
     let db = getDb()
-    let data = await db.collection("notes").findOne({_id: new ObjectId(request.params.id)})
+    let data = await db.collection("pets").findOne({_id: new ObjectId(request.params.id)})
     if (Object.keys(data).length > 0){
         response.json(data)
     }
@@ -30,11 +29,11 @@ expressRouter.route("/:id").get(async (request, response) =>{
 expressRouter.route("/").post(async (request, response) => {
     let db = getDb()
     let mongoObject = {
-        title: request.body.title,
-        content: request.body.content,
-        dateCreated: request.body.dateCreated
+        name: request.body.name,
+        breed: request.body.breed,
+        age: request.body.age
     }
-    let data = await db.collection("notes").insertOne(mongoObject)
+    let data = await db.collection("pets").insertOne(mongoObject)
     response.json(data)
 })
 
@@ -42,18 +41,18 @@ expressRouter.route("/:id").put(async (request, response) => {
     let db = getDb()
     let mongoObject = {
         $set: {
-            title: request.body.title,
-            content: request.body.content,
-            dateCreated: request.body.dateCreated
+            name: request.body.name,
+            breed: request.body.content,
+            age: request.body.age
         }
     }
-    let data = await db.collection("notes").updateOne({_id: new ObjectId(request.params.id)}, mongoObject)
+    let data = await db.collection("pets").updateOne({_id: new ObjectId(request.params.id)}, mongoObject)
     response.json(data)
 })
 
 expressRouter.route("/:id").delete(async (request, response) => {
     let db = getDb()
-    let data = await db.collection("notes").deleteOne({_id: new ObjectId(request.params.id)})
+    let data = await db.collection("pets").deleteOne({_id: new ObjectId(request.params.id)})
     response.json(data)
 })
 

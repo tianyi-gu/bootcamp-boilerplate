@@ -1,14 +1,20 @@
 {
+  "name": "bootcamp-boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=development && yarn server && yarn client",
+    "dev": "cd frontend && yarn dev",
     "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "server": "node backend/server.js",
-    "client": "cd frontend && yarn dev"
+    "server": "set NODE_ENV=development && node backend/ExampleServer.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "mongodb": "^6.17.0"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
