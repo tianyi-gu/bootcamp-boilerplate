@@ -22,13 +22,13 @@ export async function getPet(id: any) {
     }
 }
 
-export async function createPet(note: any) {
-    const response = await api.post(`/pets`, note)
+export async function createPet(pet: any) {
+    const response = await api.post(`/pets`, pet)
     return response
 }
 
-export async function updatePet(id: any, note: any) {
-    const response = await api.put(`/pets/${id}`, note)
+export async function updatePet(id: any, pet: any) {
+    const response = await api.put(`/pets/${id}`, pet)
     return response
 }
 

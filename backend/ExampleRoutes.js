@@ -31,7 +31,8 @@ expressRouter.route("/").post(async (request, response) => {
     let mongoObject = {
         name: request.body.name,
         breed: request.body.breed,
-        age: request.body.age
+        age: request.body.age,
+        url: request.body.url,
     }
     let data = await db.collection("pets").insertOne(mongoObject)
     response.json(data)
@@ -42,8 +43,9 @@ expressRouter.route("/:id").put(async (request, response) => {
     let mongoObject = {
         $set: {
             name: request.body.name,
-            breed: request.body.content,
-            age: request.body.age
+            breed: request.body.breed,
+            age: request.body.age,
+            url: request.body.url,
         }
     }
     let data = await db.collection("pets").updateOne({_id: new ObjectId(request.params.id)}, mongoObject)

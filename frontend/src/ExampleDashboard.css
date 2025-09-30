@@ -5,3 +5,65 @@
   text-align: left;
 }
 
+body {
+  background: linear-gradient(180deg, #fafafa, #f1f5f9);
+  min-height: 100vh;
+}
+
+.dashboard {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.pet-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 24px;
+}
+
+@media (min-width: 600px) {
+  .pet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+  .pet-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1200px) {
+  .pet-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.pet-card {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  border-radius: 12px;
+}
+
+.pet-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.pets-container { /* legacy hook; keep spacing consistent if used */
+  margin-top: 12px;
+}
+
+.pet-card-media {
+  height: 220px;
+}
+
+.appbar-title {
+  flex-grow: 1;
+}
+
+.search-input {
+  min-width: 260px;
+  margin: 10px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
