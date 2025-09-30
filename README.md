@@ -9,10 +9,8 @@ npm runsetup
 
 
 Then, to actually start the project, run the appropriate command. 
-# setup the project’s dependencies
-npm run build
-# activate the frontend
-npm run dev
-# (OPEN ANOTHER TERMINAL) activate the backend
-npm run server
-
+```
+npm run build // setup project dependencies and packages
+npm run dev // activate the frontend
+npm run server // (OPEN ANOTHER TERMINAL) activate the backend
+```
