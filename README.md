@@ -3,10 +3,11 @@
 Required installations: node.js
 
 To clone this project on git in terminal:
+```
 git clone https://github.com/WillardSun/bootcamp-boilerplate.git
 cd bootcamp-boilerplate
 npm runsetup
-
+```
 
 Then, to actually start the project, run the appropriate command. 
 ```
