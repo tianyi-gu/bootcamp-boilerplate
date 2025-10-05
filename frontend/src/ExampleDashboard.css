@@ -10,9 +10,23 @@ body {
   min-height: 100vh;
 }
 
+body { font-family: 'Quicksand', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.dashboard-title { font-family: 'Fredoka One', 'Quicksand', system-ui; }
+
 .dashboard {
   padding-top: 16px;
   padding-bottom: 16px;
+}
+
+.dashboard-title {
+  font-family: 'Fredoka One', 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight: 800;
+  /* responsive size: at small widths ~2.5rem, scales up with viewport, caps at 4rem */
+  font-size: clamp(3.5rem, 5vw, 4rem);
+  line-height: 1.05;
+  text-align: left;
+  margin-bottom: 2rem; /* keep spacing */
+  letter-spacing: -0.02em; /* small tightening for display headings */
 }
 
 .pet-grid {
@@ -55,9 +69,40 @@ body {
   flex-grow: 1;
 }
 
+/* nicer search input */
 .search-input {
-  min-width: 260px;
-  margin: 10px;
+  width: 100%;
+  max-width: 520px;
+  padding: 12px 16px 12px 44px; /* space for icon on left */
+  border-radius: 12px;
+  border: 1px solid #e6e6e9;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+  background: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 24 24'%3E%3Cpath d='M21.53 20.47l-4.83-4.83A7.5 7.5 0 1 0 18 15.5l4.53 4.53a.75.75 0 0 0 1.06-1.06zM5.5 10.5a5 5 0 1 1 10 0 5 5 0 0 1-10 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 14px center;
+  background-size: 18px;
+  transition: box-shadow .18s ease, transform .12s ease, border-color .12s ease;
+}
+
+/* focus state */
+.search-input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 8px 28px rgba(37,99,235,0.12);
+  transform: translateY(-1px);
+}
+
+/* placeholder style */
+.search-input::placeholder {
+  color: #9aa3b2;
+  opacity: 1;
+}
+
+/* smaller screens: give more breathing room */
+@media (max-width: 480px) {
+  .search-input { max-width: 100%; padding-left: 44px; }
 }
 
 .loading {
