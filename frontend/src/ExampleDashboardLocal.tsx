@@ -47,7 +47,7 @@ function ExampleDashboard() {
                 )}
                 <CardContent>
                   <Typography gutterBottom variant="h6">
-                    Name: {pet.name}
+                    <b>Name:</b> {pet.name}
                   </Typography>
                   <Typography gutterBottom variant="body2" color="text.secondary">
                     Breed: {pet.breed}{pet.age ? `, ${pet.age} yrs` : ''}
