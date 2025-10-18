@@ -11,29 +11,53 @@ import FemaleIcon from '@mui/icons-material/Female'
 import MaleIcon from '@mui/icons-material/Male'
 import { useState } from 'react'
 import CardActionArea from '@mui/material/CardActionArea';
-
+import { FaMapMarkerAlt } from "react-icons/fa";
+import ExampleSubmitComponent from './ExampleSubmitComponent'
+import ExampleEditComponent from './ExampleEditComponent'
 
 function ExampleDashboard() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set(['all']))
+  const [searchTerm, setSearchTerm] = useState<string>('');
+    
   const getFilteredPets = () => {
-    if (selectedCategory === 'all') 
-      return pets
-    if (selectedCategory === 'cat') 
-      return pets.filter(pet => pet.species === 'Cat')
-    if (selectedCategory === 'dog') 
-      return pets.filter(pet => pet.species === 'Dog')
-    if (selectedCategory === 'other') 
-      return pets.filter(pet => pet.species !== 'Cat' && pet.species !== 'Dog'
-    )
-    return pets
-  }
-  const filteredPets = getFilteredPets();
+    const normalizedSearch = (searchTerm || '').trim().toLowerCase()
+    let results = pets
+
+    if (selectedCategories && selectedCategories.size > 0) {
+      if (selectedCategories.has('all')) {
+        results = pets
+      } else {
+        results = pets.filter((pet: any) => {
+          const species = (pet.species || '').toLowerCase()
+          const isCatDog = species === 'cat' || species === 'dog'
+          const inBasic = selectedCategories.has(species)
+          const inOther = selectedCategories.has('other') && !isCatDog
+          return inBasic || inOther
+        })
+      }
+    }
+
+    if (normalizedSearch.length > 0) {
+      results = results.filter((pet: any) => {
+        const name = (pet.name || '').toLowerCase()
+        return name.includes(normalizedSearch)
+      })
+    }  
+    return results
+  };
+
+  const filteredPets = getFilteredPets(); 
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const handleToggleExpand = (id: string) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+
 
   const petCards = filteredPets.map((pet: any) => { //for local json file: change "data" to "pets" and uncomment the json import  
     return (
       <div>
           <div key={pet._id} className="pet-grid-item">
-            <CardActionArea>
+              <CardActionArea onClick={() => handleToggleExpand(pet._id?.$oid || pet._id)}>
               <Card className="pet-card" sx={{height: '100%', position: 'relative'}}>
                 {pet.url ? (
                   <CardMedia sx={{height: 220}} image={pet.url} />
@@ -47,30 +71,56 @@ function ExampleDashboard() {
                 )}
                 <CardContent>
                   <Typography gutterBottom variant="h6">
-                    <b>Name:</b> {pet.name}
+                    Name: {pet.name}
                   </Typography>
                   <Typography gutterBottom variant="body2" color="text.secondary">
-                    Breed: {pet.breed}{pet.age ? `, ${pet.age} yrs` : ''}
+                    <b>Breed</b>: {pet.breed}{pet.age ? `, ${pet.age} yrs` : ''}
                   </Typography>
                   <Typography gutterBottom variant="body2" color="text.secondary">
-                    Description: {pet.description}
+                    <b>Description:</b> {pet.description}
                   </Typography>
                   <Typography gutterBottom variant="body2" color="text.secondary">
-                    Location: {pet.location}
+                    <FaMapMarkerAlt />
+                    <b> Location:</b> {pet.location}
                   </Typography>
                   {pet.sex === 'm' ? (
                           <MaleIcon color="primary" fontSize="small" />
                         ) : (
                           <FemaleIcon sx={{ color: '	#c90076' }} fontSize="small" />
                     )}
+                    {expandedId === (pet._id?.$oid || pet._id) && (
+                    <Box sx={{ p: 2, backgroundColor: '#f9f9f9' }}>
+                      <Typography variant="body2" color="text.secondary">
+                        <b>More about {pet.name}:</b> {pet.description || 'No additional details.'}
+                      </Typography>
+                    </Box>
+                  )}
                 </CardContent>
               </Card>
             </CardActionArea>
           </div>
       </div>
     )
-  })
+  });
+  
+  function addCategory(previousState: Set<string>, category: string): Set<string> {
+    const next = new Set(previousState)
 
+    if (category === 'all') {
+      return new Set(['all'])
+    }
+
+    next.delete('all')
+
+    if (next.has(category)) next.delete(category)
+    else next.add(category)
+
+    if (next.size === 0) return new Set(['all'])
+
+    return next
+  }
+
+  
   return (
     <>
       <Container maxWidth="lg">
@@ -79,8 +129,10 @@ function ExampleDashboard() {
           <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: 12 }}>
             <input
               className = "search-input"
-              placeholder="Search pets by name, breed, or location"
+              placeholder="Search pets"
               aria-label="Search pets"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               style={{ fontSize: '1.05rem'
               }}
             />
@@ -89,35 +141,53 @@ function ExampleDashboard() {
         <h2 style={{color: "black"}}>Animal Categories</h2>
         <Box className="category-filter-bar" sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 4 }}>
           <Button 
-            variant={selectedCategory === 'all' ? 'contained' : 'outlined'}
-            onClick={() => setSelectedCategory('all')}
+            variant={selectedCategories.has('all') ? 'contained' : 'outlined'}
+            onClick={() =>
+              setSelectedCategories(prev => addCategory(prev, 'all'))
+            }
             className="category-button"
           >
             All
           </Button>
           <Button 
-            variant={selectedCategory === 'cat' ? 'contained' : 'outlined'}
-            onClick={() => setSelectedCategory('cat')}
+            variant={selectedCategories.has('cat') ? 'contained' : 'outlined'}
+            onClick={() =>
+              setSelectedCategories(prev => addCategory(prev, 'cat'))
+            }
             className="category-button"
           >
             Cats
           </Button>
           <Button 
-            variant={selectedCategory === 'dog' ? 'contained' : 'outlined'}
-            onClick={() => setSelectedCategory('dog')}
+            variant={selectedCategories.has('dog') ? 'contained' : 'outlined'}
+            onClick={() =>
+              setSelectedCategories(prev => addCategory(prev, 'dog'))
+            }
             className="category-button"
           >
             Dogs
           </Button>
           <Button 
-            variant={selectedCategory === 'other' ? 'contained' : 'outlined'}
-            onClick={() => setSelectedCategory('other')}
+            variant={selectedCategories.has('other') ? 'contained' : 'outlined'}
+            onClick={() =>
+              setSelectedCategories(prev => addCategory(prev, 'other'))
+            }
             className="category-button"
           >
             Other
           </Button>
         </Box>
-
+        <Box>
+          {/* <Button variant="contained" onClick={handleOpen}>
+            Add Pet
+          </Button> */}
+          {/* 
+            <ExampleSubmitComponent 
+              open={open}
+              onClose={handleClose}
+              onAdded={handleAdded}/> 
+          */}
+        </Box>
         <Box className="dashboard" sx={{py: 4}}>
           <div className="pet-grid">
             {petCards}

@@ -12,6 +12,7 @@
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "mongodb": "^6.17.0",
+    "react-icons": "^5.5.0",
     "rollup": "^4.52.4"
   },
   "keywords": [],
