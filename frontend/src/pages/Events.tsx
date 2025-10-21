@@ -62,66 +62,79 @@ function Events() {
   }, []);
 
   const eventCards = events.map((event: Event) => (
-    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={event._id}>
+    <Grid item xs={12} sm={6} md={4} key={event._id}>
       <Card 
         sx={{ 
-          height: 400,
+          height: 420,
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
           cursor: 'pointer',
           overflow: 'hidden',
+          borderRadius: 3,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            transform: 'translateY(-4px)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+          }
         }}
         onClick={() => navigate(`/event/${event._id}`)}
       >
         {event.url ? (
           <CardMedia 
             sx={{ 
-              height: 200,
+              height: 240,
               flexShrink: 0,
-              transition: 'transform 0.3s ease',
-              '&:hover': {
-                transform: 'scale(1.05)',
-              }
             }} 
             image={event.url} 
           />
         ) : (
           <Box sx={{ 
-            height: 200,
+            height: 240,
             flexShrink: 0,
             display: 'flex', 
             alignItems: 'center',
             justifyContent: 'center', 
-            backgroundColor: 'rgba(0, 97, 255, 0.06)'
+            backgroundColor: '#F8F9FA'
           }}>
             <Box sx={{ 
-              backgroundColor: 'rgba(0, 97, 255, 0.1)',
+              backgroundColor: 'rgba(32, 178, 170, 0.1)',
               borderRadius: '50%',
-              p: 2,
+              p: 3,
             }}>
-              <CalendarTodayIcon sx={{ fontSize: 48, color: '#0061FF' }} />
+              <CalendarTodayIcon sx={{ fontSize: 48, color: '#20B2AA' }} />
             </Box>
           </Box>
         )}
-        <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <Typography gutterBottom variant="h6" component="div">
+        <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', p: 3 }}>
+          <Typography 
+            gutterBottom 
+            variant="h6" 
+            component="div"
+            sx={{
+              fontWeight: 700,
+              color: '#1E1919',
+              mb: 2,
+              fontSize: '1.25rem',
+            }}
+          >
             {event.name}
           </Typography>
           
           {event.date && (
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-              <CalendarTodayIcon sx={{ fontSize: 16, mr: 0.5 }} />
-              <Typography variant="body2" color="text.secondary">
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+              <CalendarTodayIcon sx={{ fontSize: 16, mr: 1, color: '#20B2AA' }} />
+              <Typography variant="body2" sx={{ color: '#637381', fontWeight: 500 }}>
                 {event.date}{event.time ? ` at ${event.time}` : ''}
               </Typography>
             </Box>
           )}
           
           {event.location && (
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-              <LocationOnIcon sx={{ fontSize: 16, mr: 0.5 }} />
-              <Typography variant="body2" color="text.secondary">
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <LocationOnIcon sx={{ fontSize: 16, mr: 1, color: '#20B2AA' }} />
+              <Typography variant="body2" sx={{ color: '#637381' }}>
                 {event.location}
               </Typography>
             </Box>
@@ -131,22 +144,37 @@ function Events() {
             <Chip 
               label={`By ${event.organizer}`}
               size="small"
-              sx={{ mt: 1 }}
-              variant="outlined"
+              sx={{ 
+                mt: 'auto',
+                backgroundColor: 'rgba(32, 178, 170, 0.08)',
+                color: '#20B2AA',
+                fontWeight: 500,
+                border: 'none',
+              }}
             />
           )}
 
           <IconButton
-            sx={{ position: 'absolute', top: 8, right: 8 }}
+            sx={{ 
+              position: 'absolute', 
+              top: 12, 
+              right: 12,
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(4px)',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              borderRadius: 2,
+              '&:hover': {
+                backgroundColor: '#FFFFFF',
+              }
+            }}
             onClick={(e) => {
               e.stopPropagation();
               setSelectedEvent(event);
               setEditOpen(true);
             }}
             size="small"
-            color="primary"
           >
-            <EditIcon />
+            <EditIcon sx={{ fontSize: 18 }} />
           </IconButton>
         </CardContent>
       </Card>
@@ -157,39 +185,50 @@ function Events() {
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navigation />
       
-      <Container maxWidth="lg" sx={{ py: 5, flex: 1 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+      <Container maxWidth="lg" sx={{ py: 6, flex: 1 }}>
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
           <Typography 
-            variant="h4" 
+            variant="h3" 
             sx={{ 
-              fontWeight: 600,
+              fontWeight: 700,
               color: '#1E1919',
+              mb: 2,
               letterSpacing: '-0.02em',
             }}
           >
             Upcoming Events
           </Typography>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: '#637381',
+              mb: 4,
+              fontWeight: 400,
+            }}
+          >
+            Join us for fun activities, adoption drives, and community gatherings. 
+            Check out our upcoming events and mark your calendar!
+          </Typography>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => setAddOpen(true)}
+            sx={{
+              backgroundColor: '#20B2AA',
+              color: '#FFFFFF',
+              px: 4,
+              py: 1.5,
+              borderRadius: 3,
+              textTransform: 'none',
+              fontWeight: 500,
+              '&:hover': {
+                backgroundColor: '#1A9B96',
+              },
+            }}
           >
             Add Event
           </Button>
         </Box>
-
-        <Typography 
-          variant="body1" 
-          paragraph
-          sx={{ 
-            color: '#637381',
-            lineHeight: 1.7,
-            mb: 4,
-          }}
-        >
-          Join us for fun activities, adoption drives, and community gatherings. 
-          Check out our upcoming events and mark your calendar!
-        </Typography>
 
         {loading && (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
@@ -204,14 +243,6 @@ function Events() {
             <Typography variant="h6" color="text.secondary" gutterBottom>
               No events scheduled yet
             </Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => setAddOpen(true)}
-              sx={{ mt: 2 }}
-            >
-              Create First Event
-            </Button>
           </Box>
         )}
 
