@@ -56,28 +56,33 @@ function Adoptees() {
     <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={pet._id}>
       <Card 
         sx={{ 
-          height: 400,
+          height: 420,
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
           overflow: 'hidden',
+          borderRadius: 3,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            transform: 'translateY(-4px)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+          }
         }}
       >
         {pet.url ? (
           <CardMedia 
             sx={{ 
-              height: 220,
+              height: 250,
               flexShrink: 0,
-              transition: 'transform 0.3s ease',
-              '&:hover': {
-                transform: 'scale(1.05)',
-              }
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }} 
             image={pet.url} 
           />
         ) : (
           <Box sx={{ 
-            height: 220,
+            height: 250,
             flexShrink: 0,
             display: 'flex', 
             alignItems: 'center',
