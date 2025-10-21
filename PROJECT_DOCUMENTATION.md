@@ -83,8 +83,8 @@ bootcamp-boilerplate/
 
 1. Create a `.env` file in the root directory:
 ```env
-ATLAS_URI=mongodb+srv://tg123:tg123@bootcamp.qsdet76.mongodb.net/?retryWrites=true&w=majority&appName=Bootcamp
-DATABASE_NAME=Bootcamp
+ATLAS_URI=your api key
+DATABASE_NAME=your database
 NODE_ENV=development
 ```
 

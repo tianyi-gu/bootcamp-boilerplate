@@ -29,7 +29,7 @@ cd bootcamp-boilerplate
 2. **Create environment file:**
 Create a `.env` file in the root directory:
 ```env
-ATLAS_URI=mongodb+srv://tg123:tg123@bootcamp.qsdet76.mongodb.net/?retryWrites=true&w=majority&appName=Bootcamp
+ATLAS_URI=your_mongodb_connection_string
 DATABASE_NAME=Bootcamp
 NODE_ENV=development
 ```
