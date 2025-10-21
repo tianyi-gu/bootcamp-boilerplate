@@ -32,7 +32,13 @@ expressRouter.route("/").post(async (request, response) => {
         name: request.body.name,
         breed: request.body.breed,
         age: request.body.age,
+        species: request.body.species,
         url: request.body.url,
+        description: request.body.description,
+        location: request.body.location,
+        sex: request.body.sex,
+        adopted: request.body.adopted || false,
+        featuredPetOfWeek: request.body.featuredPetOfWeek || false
     }
     let data = await db.collection("pets").insertOne(mongoObject)
     response.json(data)
@@ -45,7 +51,13 @@ expressRouter.route("/:id").put(async (request, response) => {
             name: request.body.name,
             breed: request.body.breed,
             age: request.body.age,
+            species: request.body.species,
             url: request.body.url,
+            description: request.body.description,
+            location: request.body.location,
+            sex: request.body.sex,
+            adopted: request.body.adopted,
+            featuredPetOfWeek: request.body.featuredPetOfWeek
         }
     }
     let data = await db.collection("pets").updateOne({_id: new ObjectId(request.params.id)}, mongoObject)
