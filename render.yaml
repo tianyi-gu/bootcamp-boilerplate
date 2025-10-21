@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: bootcamp-backend
+    runtime: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ATLAS_URI
+        sync: false
+      - key: DATABASE_NAME
+        value: Bootcamp
+

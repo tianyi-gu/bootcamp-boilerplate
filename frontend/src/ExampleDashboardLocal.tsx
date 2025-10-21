@@ -12,8 +12,6 @@ import MaleIcon from '@mui/icons-material/Male'
 import { useState } from 'react'
 import CardActionArea from '@mui/material/CardActionArea';
 import { FaMapMarkerAlt } from "react-icons/fa";
-import ExampleSubmitComponent from './ExampleSubmitComponent'
-import ExampleEditComponent from './ExampleEditComponent'
 
 function ExampleDashboard() {
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set(['all']))
