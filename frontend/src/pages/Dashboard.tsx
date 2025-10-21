@@ -106,7 +106,7 @@ function Dashboard() {
   }, [data]);
 
   const petCards = filtered.map((pet: Pet) => (
-    <Grid item xs={12} sm={6} md={4} lg={3} key={pet._id}>
+    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={pet._id}>
       <Card 
         sx={{ 
           height: 420,
@@ -240,7 +240,7 @@ function Dashboard() {
         }}>
           <Container maxWidth="lg">
             <Grid container spacing={4} alignItems="center">
-              <Grid item xs={12} md={5}>
+              <Grid size={{ xs: 12, md: 5 }}>
                 {petOfTheWeek.url ? (
                   <Box
                     component="img"
@@ -277,7 +277,7 @@ function Dashboard() {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} md={7}>
+              <Grid size={{ xs: 12, md: 7 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <Chip
                     icon={<FavoriteIcon sx={{ fontSize: 18 }} />}

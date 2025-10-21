@@ -123,7 +123,7 @@ function Map() {
         {!loading && !error && pets.length > 0 && (
           <Grid container spacing={3}>
             {/* Map Placeholder */}
-            <Grid item xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <Card sx={{ height: 500 }}>
                 <Box
                   sx={{
@@ -182,7 +182,7 @@ function Map() {
             </Grid>
 
             {/* Location List */}
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom fontWeight="bold">

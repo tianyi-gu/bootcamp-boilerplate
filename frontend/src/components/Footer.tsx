@@ -16,7 +16,7 @@ function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" gutterBottom sx={{ color: '#1E1919', fontWeight: 600 }}>
               Pawgrammers
             </Typography>
@@ -26,7 +26,7 @@ function Footer() {
             </Typography>
           </Grid>
           
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" gutterBottom sx={{ color: '#1E1919', fontWeight: 600 }}>
               Contact Us
             </Typography>
@@ -50,7 +50,7 @@ function Footer() {
             </Box>
           </Grid>
           
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" gutterBottom sx={{ color: '#1E1919', fontWeight: 600 }}>
               Hours
             </Typography>
