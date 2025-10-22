@@ -22,7 +22,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 // import { useNavigate } from 'react-router-dom';
-import { getPets } from '../ExampleApi';
+import { getPets, updatePet } from '../ExampleApi';
 import AddPetDialog from '../components/AddPetDialog';
 import EditPetDialog from '../components/EditPetDialog';
 import Navigation from '../components/Navigation';
@@ -993,45 +993,75 @@ function Dashboard() {
                     </Box>
 
                     {/* Action Buttons */}
-                    <Box sx={{ display: 'flex', gap: 2, mt: 'auto' }}>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          backgroundColor: '#20B2AA',
-                          color: '#FFFFFF',
-                          px: 4,
-                          py: 1.5,
-                          borderRadius: 3,
-                          textTransform: 'none',
-                          fontWeight: 600,
-                          fontSize: '1rem',
-                          '&:hover': {
-                            backgroundColor: '#1A9B96',
-                          },
-                        }}
-                      >
-                        Adopt {selectedPet.name}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          borderColor: '#20B2AA',
-                          color: '#20B2AA',
-                          px: 4,
-                          py: 1.5,
-                          borderRadius: 3,
-                          textTransform: 'none',
-                          fontWeight: 600,
-                          fontSize: '1rem',
-                          '&:hover': {
-                            borderColor: '#1A9B96',
-                            backgroundColor: 'rgba(32, 178, 170, 0.04)',
-                          },
-                        }}
-                      >
-                        Contact Shelter
-                      </Button>
-                    </Box>
+                    {!selectedPet.adopted && (
+                      <Box sx={{ display: 'flex', gap: 2, mt: 'auto' }}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: '#20B2AA',
+                            color: '#FFFFFF',
+                            px: 4,
+                            py: 1.5,
+                            borderRadius: 3,
+                            textTransform: 'none',
+                            fontWeight: 600,
+                            fontSize: '1rem',
+                            '&:hover': {
+                              backgroundColor: '#1A9B96',
+                            },
+                          }}
+                          onClick={async () => {
+                            if (window.confirm(`Are you sure you want to adopt ${selectedPet.name}? This will mark them as adopted.`)) {
+                              try {
+                                await updatePet(selectedPet._id, { ...selectedPet, adopted: true });
+                                alert(`Congratulations! ${selectedPet.name} has been adopted!`);
+                                setPetModalOpen(false);
+                                refreshPets();
+                              } catch (error) {
+                                alert('Error adopting pet. Please try again.');
+                              }
+                            }
+                          }}
+                        >
+                          Adopt {selectedPet.name}
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          sx={{
+                            borderColor: '#20B2AA',
+                            color: '#20B2AA',
+                            px: 4,
+                            py: 1.5,
+                            borderRadius: 3,
+                            textTransform: 'none',
+                            fontWeight: 600,
+                            fontSize: '1rem',
+                            '&:hover': {
+                              borderColor: '#1A9B96',
+                              backgroundColor: 'rgba(32, 178, 170, 0.04)',
+                            },
+                          }}
+                          onClick={() => {
+                            window.location.href = `mailto:info@pawgrammers.org?subject=Inquiry about ${selectedPet.name}&body=Hi, I would like more information about adopting ${selectedPet.name}.`;
+                          }}
+                        >
+                          Contact Shelter
+                        </Button>
+                      </Box>
+                    )}
+                    {selectedPet.adopted && (
+                      <Box sx={{
+                        p: 2,
+                        backgroundColor: '#E8F5E9',
+                        borderRadius: 2,
+                        textAlign: 'center',
+                        mt: 'auto',
+                      }}>
+                        <Typography variant="h6" sx={{ color: '#2E7D32', fontWeight: 600 }}>
+                          ✓ This pet has been adopted!
+                        </Typography>
+                      </Box>
+                    )}
                   </Box>
                 </Box>
               )}
