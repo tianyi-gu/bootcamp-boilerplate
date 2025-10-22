@@ -97,12 +97,12 @@ function Dashboard() {
         pet.species?.toLowerCase().includes(q) ||
         pet.location?.toLowerCase().includes(q) ||
         pet.age?.toLowerCase().includes(q) ||
-        (pet.sex === 'M' && 'male'.includes(q)) ||
-        (pet.sex === 'F' && 'female'.includes(q));
+        (pet.sex?.toUpperCase() === 'M' && 'male'.includes(q)) ||
+        (pet.sex?.toUpperCase() === 'F' && 'female'.includes(q));
       
-      const matchesSpecies = speciesFilter === 'All' || pet.species === speciesFilter;
+      const matchesSpecies = speciesFilter === 'All' || pet.species?.toLowerCase() === speciesFilter.toLowerCase();
       const matchesLocation = locationFilter === 'All' || pet.location === locationFilter;
-      const matchesSex = sexFilter === 'All' || pet.sex === sexFilter;
+      const matchesSex = sexFilter === 'All' || pet.sex?.toUpperCase() === sexFilter.toUpperCase();
 
       return matchesSearch && matchesSpecies && matchesLocation && matchesSex;
     });

@@ -15,7 +15,7 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { getPet } from '../ExampleApi';
+import { getPet, updatePet } from '../ExampleApi';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
@@ -39,6 +39,7 @@ function PetDetail() {
   const [pet, setPet] = useState<Pet | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [adopting, setAdopting] = useState(false);
 
   useEffect(() => {
     const loadPet = async () => {
@@ -227,16 +228,44 @@ function PetDetail() {
               )}
 
               {!pet.adopted && (
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  fullWidth
-                  sx={{ py: 1.5 }}
-                  onClick={() => alert('Adoption process would begin here!')}
-                >
-                  Adopt {pet.name}
-                </Button>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    fullWidth
+                    sx={{ py: 1.5 }}
+                    disabled={adopting}
+                    onClick={async () => {
+                      if (window.confirm(`Are you sure you want to adopt ${pet.name}? This will mark them as adopted.`)) {
+                        try {
+                          setAdopting(true);
+                          await updatePet(pet._id, { ...pet, adopted: true });
+                          setPet({ ...pet, adopted: true });
+                          alert(`Congratulations! ${pet.name} has been adopted! You can now see them in the Adoptees page.`);
+                          setTimeout(() => navigate('/adoptees'), 2000);
+                        } catch (error) {
+                          alert('Error adopting pet. Please try again.');
+                        } finally {
+                          setAdopting(false);
+                        }
+                      }
+                    }}
+                  >
+                    {adopting ? 'Processing...' : `Adopt ${pet.name}`}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    fullWidth
+                    sx={{ py: 1.5 }}
+                    onClick={() => {
+                      window.location.href = 'mailto:info@pawgrammers.org?subject=Inquiry about ' + pet.name + '&body=Hi, I would like more information about adopting ' + pet.name + '.';
+                    }}
+                  >
+                    Contact Shelter
+                  </Button>
+                </Box>
               )}
             </Box>
           </Grid>
