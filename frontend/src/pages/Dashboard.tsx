@@ -73,6 +73,13 @@ function Dashboard() {
     }
   };
 
+  const clearFilters = () => {
+    setQuery('');
+    setSpeciesFilter('All');
+    setLocationFilter('All');
+    setSexFilter('All');
+  };
+
   useEffect(() => {
     refreshPets();
   }, []);
@@ -194,7 +201,7 @@ function Dashboard() {
           </Typography>
           <Typography 
             variant="body2" 
-            sx={{ 
+                sx={{ 
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
               color: '#6B7280',
               mb: 2,
@@ -204,10 +211,10 @@ function Dashboard() {
           >
             {pet.sex === 'M' ? 'Male' : 'Female'}, {pet.age} yrs
           </Typography>
-          {pet.location && (
+            {pet.location && (
             <Typography 
               variant="body2" 
-              sx={{ 
+                sx={{ 
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                 color: '#9CA3AF',
                 fontSize: '0.8rem',
@@ -251,7 +258,7 @@ function Dashboard() {
       <Navigation />
       
       {/* Organization Banner */}
-      <Box sx={{ 
+        <Box sx={{ 
         background: 'linear-gradient(135deg, #20B2AA 0%, #17A2B8 50%, #138496 100%)',
         py: 8,
         mb: 6,
@@ -309,7 +316,7 @@ function Dashboard() {
             </Typography>
             <Typography 
               variant="h5" 
-              sx={{ 
+                    sx={{ 
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                 fontWeight: 400,
                 mb: 4,
@@ -326,9 +333,9 @@ function Dashboard() {
             </Typography>
             
             {/* Stats Row */}
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
+                  <Box sx={{ 
+                    display: 'flex',
+                    justifyContent: 'center',
               gap: { xs: 4, md: 8 }, 
               flexWrap: 'wrap',
               mt: 6,
@@ -347,10 +354,10 @@ function Dashboard() {
                   }}
                 >
                   {availablePets.length}
-                </Typography>
+                    </Typography>
                 <Typography 
                   variant="h6" 
-                  sx={{ 
+                    sx={{
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                     fontWeight: 500,
                     fontSize: { xs: '1.1rem', md: '1.3rem' },
@@ -361,7 +368,7 @@ function Dashboard() {
                 >
                   Pets Available
                 </Typography>
-              </Box>
+                </Box>
               <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
                 <Typography 
                   variant="h2" 
@@ -408,7 +415,7 @@ function Dashboard() {
                 </Typography>
                 <Typography 
                   variant="h6" 
-                  sx={{ 
+                  sx={{
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                     fontWeight: 500,
                     fontSize: { xs: '1.1rem', md: '1.3rem' },
@@ -422,8 +429,8 @@ function Dashboard() {
               </Box>
             </Box>
           </Box>
-        </Container>
-      </Box>
+          </Container>
+        </Box>
 
       {/* Main Content with Sidebar Layout */}
       <Box sx={{ display: 'flex', flex: 1, minHeight: 0 }}>
@@ -442,7 +449,7 @@ function Dashboard() {
             variant="h6" 
             sx={{ 
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              fontWeight: 600,
+              fontWeight: 600, 
               color: '#1F2937',
               mb: 3,
               fontSize: '1.1rem',
@@ -450,7 +457,7 @@ function Dashboard() {
           >
             Find Your Perfect Pet
           </Typography>
-
+          
           {/* Search Bar */}
           <Box sx={{ mb: 4 }}>
             <TextField
@@ -489,11 +496,11 @@ function Dashboard() {
               >
                 SPECIES
               </Typography>
-              <TextField
-                select
+            <TextField
+              select
                 fullWidth
-                value={speciesFilter}
-                onChange={(e) => setSpeciesFilter(e.target.value)}
+              value={speciesFilter}
+              onChange={(e) => setSpeciesFilter(e.target.value)}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     backgroundColor: '#FFFFFF',
@@ -509,90 +516,12 @@ function Dashboard() {
                 }}
               >
                 <MenuItem value="All">Any</MenuItem>
-                <MenuItem value="Dog">Dogs</MenuItem>
-                <MenuItem value="Cat">Cats</MenuItem>
-                <MenuItem value="Bird">Birds</MenuItem>
-                <MenuItem value="Rabbit">Rabbits</MenuItem>
-                <MenuItem value="Other">Other</MenuItem>
-              </TextField>
-            </Box>
-
-            {/* Age Filter */}
-            <Box>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontWeight: 600,
-                  color: '#374151',
-                  mb: 1,
-                  fontSize: '0.9rem',
-                }}
-              >
-                AGE
-              </Typography>
-              <TextField
-                select
-                fullWidth
-                value="Any"
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: 2,
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-                    '&:hover': {
-                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
-                    },
-                    '&.Mui-focused': {
-                      boxShadow: '0 0 0 3px rgba(32, 178, 170, 0.1)',
-                    }
-                  }
-                }}
-              >
-                <MenuItem value="Any">Any</MenuItem>
-                <MenuItem value="Puppy">Puppy (0-1 year)</MenuItem>
-                <MenuItem value="Young">Young (1-3 years)</MenuItem>
-                <MenuItem value="Adult">Adult (3-7 years)</MenuItem>
-                <MenuItem value="Senior">Senior (7+ years)</MenuItem>
-              </TextField>
-            </Box>
-
-            {/* Size Filter */}
-            <Box>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  fontWeight: 600,
-                  color: '#374151',
-                  mb: 1,
-                  fontSize: '0.9rem',
-                }}
-              >
-                SIZE
-              </Typography>
-              <TextField
-                select
-                fullWidth
-                value="Any"
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: 2,
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-                    '&:hover': {
-                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
-                    },
-                    '&.Mui-focused': {
-                      boxShadow: '0 0 0 3px rgba(32, 178, 170, 0.1)',
-                    }
-                  }
-                }}
-              >
-                <MenuItem value="Any">Any</MenuItem>
-                <MenuItem value="Small">Small</MenuItem>
-                <MenuItem value="Medium">Medium</MenuItem>
-                <MenuItem value="Large">Large</MenuItem>
-                <MenuItem value="Extra Large">Extra Large</MenuItem>
-              </TextField>
+              <MenuItem value="Dog">Dogs</MenuItem>
+              <MenuItem value="Cat">Cats</MenuItem>
+              <MenuItem value="Bird">Birds</MenuItem>
+              <MenuItem value="Rabbit">Rabbits</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </TextField>
             </Box>
 
             {/* Gender Filter */}
@@ -646,11 +575,11 @@ function Dashboard() {
               >
                 LOCATION
               </Typography>
-              <TextField
-                select
+            <TextField
+              select
                 fullWidth
-                value={locationFilter}
-                onChange={(e) => setLocationFilter(e.target.value)}
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     backgroundColor: '#FFFFFF',
@@ -664,11 +593,11 @@ function Dashboard() {
                     }
                   }
                 }}
-              >
-                {locations.map(loc => (
-                  <MenuItem key={loc} value={loc}>{loc}</MenuItem>
-                ))}
-              </TextField>
+            >
+              {locations.map(loc => (
+                <MenuItem key={loc} value={loc}>{loc}</MenuItem>
+              ))}
+            </TextField>
             </Box>
 
             {/* Admin Controls */}
@@ -682,9 +611,9 @@ function Dashboard() {
               mx: -1
             }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Button 
-                  variant="outlined" 
-                  onClick={refreshPets}
+              <Button 
+                variant="outlined" 
+                  onClick={clearFilters}
                   sx={{ 
                     borderRadius: 2,
                     borderColor: '#20B2AA',
@@ -695,11 +624,11 @@ function Dashboard() {
                     }
                   }}
                 >
-                  Refresh
-                </Button>
-                <Button 
-                  variant="contained" 
-                  onClick={() => setAddOpen(true)}
+                  Clear Filters
+              </Button>
+              <Button 
+                variant="contained" 
+                onClick={() => setAddOpen(true)}
                   sx={{ 
                     borderRadius: 2,
                     background: 'linear-gradient(135deg, #20B2AA 0%, #17A2B8 100%)',
@@ -709,13 +638,13 @@ function Dashboard() {
                       boxShadow: '0 4px 12px rgba(32, 178, 170, 0.4)',
                     }
                   }}
-                >
-                  Add Pet
-                </Button>
+              >
+                Add Pet
+              </Button>
               </Box>
             </Box>
+            </Box>
           </Box>
-        </Box>
 
         {/* Main Content Area */}
         <Box sx={{ 
@@ -745,59 +674,59 @@ function Dashboard() {
             >
               Available Pets
             </Typography>
-            <Typography 
+          <Typography 
               variant="body1" 
-              sx={{ 
+            sx={{ 
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                 color: '#6B7280',
                 mb: 0,
                 fontWeight: 400,
+            }}
+          >
+            Showing {filtered.length} of {availablePets.length} available pets
+          </Typography>
+        </Box>
+
+        {loading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
+
+        {!loading && error && <Alert severity="error">{error}</Alert>}
+
+        {!loading && !error && (
+            <Grid container spacing={3} justifyContent="center">
+            {petCards}
+          </Grid>
+        )}
+
+        {!loading && !error && filtered.length === 0 && (
+          <Box sx={{ 
+            textAlign: 'center', 
+            py: 12,
+            px: 3,
+          }}>
+            <Typography 
+              variant="h5" 
+              sx={{ 
+                color: '#1E1919',
+                fontWeight: 600,
+                mb: 1,
               }}
             >
-              Showing {filtered.length} of {availablePets.length} available pets
+              No pets match your filters
+            </Typography>
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                color: '#637381',
+              }}
+            >
+              Try adjusting your search or filters to find more pets
             </Typography>
           </Box>
-
-          {loading && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-              <CircularProgress />
-            </Box>
-          )}
-
-          {!loading && error && <Alert severity="error">{error}</Alert>}
-
-          {!loading && !error && (
-            <Grid container spacing={3} justifyContent="center">
-              {petCards}
-            </Grid>
-          )}
-
-          {!loading && !error && filtered.length === 0 && (
-            <Box sx={{ 
-              textAlign: 'center', 
-              py: 12,
-              px: 3,
-            }}>
-              <Typography 
-                variant="h5" 
-                sx={{ 
-                  color: '#1E1919',
-                  fontWeight: 600,
-                  mb: 1,
-                }}
-              >
-                No pets match your filters
-              </Typography>
-              <Typography 
-                variant="body1" 
-                sx={{ 
-                  color: '#637381',
-                }}
-              >
-                Try adjusting your search or filters to find more pets
-              </Typography>
-            </Box>
-          )}
+        )}
         </Box>
       </Box>
 
