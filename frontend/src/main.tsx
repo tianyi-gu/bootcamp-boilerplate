@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import theme from './ExampleTheme.ts'
 import 'leaflet/dist/leaflet.css'
+import Home from './pages/Home.tsx'
 import Dashboard from './pages/Dashboard.tsx'
 import PetDetail from './pages/PetDetail.tsx'
 import Events from './pages/Events.tsx'
@@ -18,7 +19,8 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/pet/:id" element={<PetDetail />} />
         <Route path="/events" element={<Events />} />
         <Route path="/event/:id" element={<EventDetail />} />

@@ -7,8 +7,9 @@ function Navigation() {
   const location = useLocation();
 
   const isActive = (path: string) => {
+    if (path === '/dashboard' && location.pathname.startsWith('/dashboard')) return true;
     if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    if (path !== '/' && path !== '/dashboard' && location.pathname.startsWith(path)) return true;
     return false;
   };
 
@@ -41,7 +42,7 @@ function Navigation() {
               letterSpacing: '-0.02em',
             }}
           >
-            Adopt a Pet
+            Pawgrammers
           </Typography>
         </Box>
         
@@ -49,18 +50,18 @@ function Navigation() {
         
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           <Button 
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/dashboard')}
             sx={{
-              color: isActive('/') ? '#20B2AA' : '#1E1919',
-              backgroundColor: isActive('/') ? 'rgba(32, 178, 170, 0.08)' : 'transparent',
-              fontWeight: isActive('/') ? 600 : 500,
+              color: isActive('/dashboard') ? '#20B2AA' : '#1E1919',
+              backgroundColor: isActive('/dashboard') ? 'rgba(32, 178, 170, 0.08)' : 'transparent',
+              fontWeight: isActive('/dashboard') ? 600 : 500,
               px: 2,
               py: 1,
               borderRadius: 2,
               textTransform: 'none',
               fontSize: '0.95rem',
               '&:hover': {
-                backgroundColor: isActive('/') ? 'rgba(32, 178, 170, 0.12)' : 'rgba(32, 178, 170, 0.04)',
+                backgroundColor: isActive('/dashboard') ? 'rgba(32, 178, 170, 0.12)' : 'rgba(32, 178, 170, 0.04)',
               },
             }}
           >
