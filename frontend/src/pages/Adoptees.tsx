@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -30,27 +31,28 @@ type Pet = {
 };
 
 function Adoptees() {
+  const location = useLocation();
   const [adoptedPets, setAdoptedPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const loadAdoptedPets = async () => {
-      try {
-        setLoading(true);
-        setError('');
-        const data = await getPets();
-        const adopted = data.filter((pet: Pet) => pet.adopted);
-        setAdoptedPets(adopted);
-      } catch (e: any) {
-        setError('Error loading adopted pets: ' + e);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadAdoptedPets = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const data = await getPets();
+      const adopted = data.filter((pet: Pet) => pet.adopted);
+      setAdoptedPets(adopted);
+    } catch (e: any) {
+      setError('Error loading adopted pets: ' + e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadAdoptedPets();
-  }, []);
+  }, [location.pathname]);
 
   const petCards = adoptedPets.map((pet: Pet) => (
     <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={pet._id}>
