@@ -1001,13 +1001,16 @@ function Dashboard() {
                           onClick={async () => {
                             if (window.confirm(`Are you sure you want to adopt ${selectedPet.name}? This will mark them as adopted.`)) {
                               try {
-                                await updatePet(selectedPet._id, { ...selectedPet, adopted: true });
+                                console.log('Adopting pet:', selectedPet._id, selectedPet);
+                                const response = await updatePet(selectedPet._id, { ...selectedPet, adopted: true });
+                                console.log('Update response:', response);
                                 setPetModalOpen(false);
                                 alert(`Congratulations! ${selectedPet.name} has been adopted! Redirecting to Adoptees page...`);
                                 await refreshPets(); // Refresh the data first
                                 setTimeout(() => navigate('/adoptees'), 500); // Navigate after a short delay
                               } catch (error) {
-                                alert('Error adopting pet. Please try again.');
+                                console.error('Error adopting pet:', error);
+                                alert('Error adopting pet. Please try again. Check console for details.');
                               }
                             }
                           }}
