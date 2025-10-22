@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getPets, updatePet } from '../ExampleApi';
 import AddPetDialog from '../components/AddPetDialog';
 import EditPetDialog from '../components/EditPetDialog';
@@ -43,7 +43,7 @@ type Pet = {
 };
 
 function Dashboard() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -1002,9 +1002,10 @@ function Dashboard() {
                             if (window.confirm(`Are you sure you want to adopt ${selectedPet.name}? This will mark them as adopted.`)) {
                               try {
                                 await updatePet(selectedPet._id, { ...selectedPet, adopted: true });
-                                alert(`Congratulations! ${selectedPet.name} has been adopted!`);
                                 setPetModalOpen(false);
-                                refreshPets();
+                                alert(`Congratulations! ${selectedPet.name} has been adopted! Redirecting to Adoptees page...`);
+                                await refreshPets(); // Refresh the data first
+                                setTimeout(() => navigate('/adoptees'), 500); // Navigate after a short delay
                               } catch (error) {
                                 alert('Error adopting pet. Please try again.');
                               }
