@@ -7,7 +7,6 @@ import {
   Alert,
   Card,
   CardContent,
-  Grid,
   List,
   ListItem,
   ListItemText,
@@ -173,8 +172,8 @@ function Map() {
                     center={[45.0, -100.0]}
                     zoom={3}
                     style={{ height: '100%', width: '100%' }}
-                    whenCreated={(map) => {
-                      console.log('Map created successfully!', map);
+                    whenReady={() => {
+                      console.log('Map created successfully!');
                     }}
                   >
                     <TileLayer

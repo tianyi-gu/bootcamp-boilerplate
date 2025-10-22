@@ -14,16 +14,14 @@ import {
   IconButton,
   MenuItem,
   Grid,
-  Chip,
   Modal,
   Backdrop,
   Fade,
   Paper
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { getPets } from '../ExampleApi';
 import AddPetDialog from '../components/AddPetDialog';
 import EditPetDialog from '../components/EditPetDialog';
@@ -45,7 +43,7 @@ type Pet = {
 };
 
 function Dashboard() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [data, setData] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -80,9 +78,9 @@ function Dashboard() {
   }, []);
 
   // Get featured pet of the week
-  const petOfTheWeek = useMemo(() => {
-    return data.find(pet => pet.featuredPetOfWeek && !pet.adopted);
-  }, [data]);
+  // const petOfTheWeek = useMemo(() => {
+  //   return data.find(pet => pet.featuredPetOfWeek && !pet.adopted);
+  // }, [data]);
 
   // Filter available pets (not adopted)
   const availablePets = useMemo(() => {
@@ -117,7 +115,7 @@ function Dashboard() {
   }, [data]);
 
   const petCards = filtered.map((pet: Pet) => (
-    <Grid item xs={12} sm={6} md={6} lg={6} key={pet._id}>
+    <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }} key={pet._id}>
       <Card 
         sx={{ 
           height: 320,
@@ -137,7 +135,7 @@ function Dashboard() {
             border: '1px solid rgba(32, 178, 170, 0.3)',
           }
         }}
-        onClick={(e) => {
+        onClick={() => {
           setSelectedPet(pet);
           setPetModalOpen(true);
         }}

@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, Button, Box, Chip } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PetsIcon from '@mui/icons-material/Pets';
 

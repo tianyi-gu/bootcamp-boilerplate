@@ -62,7 +62,7 @@ function Events() {
   }, []);
 
   const eventCards = events.map((event: Event) => (
-    <Grid item xs={12} sm={6} md={4} key={event._id}>
+    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={event._id}>
       <Card 
         sx={{ 
           height: 420,

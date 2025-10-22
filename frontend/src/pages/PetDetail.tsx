@@ -108,7 +108,7 @@ function PetDetail() {
         </Button>
 
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             {pet.url ? (
               <Box
                 component="img"
@@ -140,7 +140,7 @@ function PetDetail() {
             )}
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box>
               {pet.featuredPetOfWeek && (
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -182,7 +182,7 @@ function PetDetail() {
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid size={{ xs: 6 }}>
                       <Typography variant="body2" color="text.secondary">
                         Breed
                       </Typography>
@@ -190,7 +190,7 @@ function PetDetail() {
                         {pet.breed}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid size={{ xs: 6 }}>
                       <Typography variant="body2" color="text.secondary">
                         Age
                       </Typography>
@@ -199,7 +199,7 @@ function PetDetail() {
                       </Typography>
                     </Grid>
                     {pet.location && (
-                      <Grid item xs={12}>
+                      <Grid size={{ xs: 12 }}>
                         <Typography variant="body2" color="text.secondary">
                           Location
                         </Typography>
