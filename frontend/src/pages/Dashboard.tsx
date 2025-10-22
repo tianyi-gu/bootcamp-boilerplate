@@ -51,6 +51,7 @@ function Dashboard() {
   const [speciesFilter, setSpeciesFilter] = useState('All');
   const [locationFilter, setLocationFilter] = useState('All');
   const [sexFilter, setSexFilter] = useState('All');
+  const [ageFilter, setAgeFilter] = useState('Any');
   const [addOpen, setAddOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
@@ -78,6 +79,7 @@ function Dashboard() {
     setSpeciesFilter('All');
     setLocationFilter('All');
     setSexFilter('All');
+    setAgeFilter('Any');
   };
 
   useEffect(() => {
@@ -110,10 +112,22 @@ function Dashboard() {
       const matchesSpecies = speciesFilter === 'All' || pet.species?.toLowerCase() === speciesFilter.toLowerCase();
       const matchesLocation = locationFilter === 'All' || pet.location === locationFilter;
       const matchesSex = sexFilter === 'All' || pet.sex?.toUpperCase() === sexFilter.toUpperCase();
+      
+      // Age filter logic
+      const matchesAge = ageFilter === 'Any' || (() => {
+        const age = parseInt(pet.age || '0');
+        switch(ageFilter) {
+          case 'Puppy': return age <= 1;
+          case 'Young': return age > 1 && age <= 3;
+          case 'Adult': return age > 3 && age <= 7;
+          case 'Senior': return age > 7;
+          default: return true;
+        }
+      })();
 
-      return matchesSearch && matchesSpecies && matchesLocation && matchesSex;
+      return matchesSearch && matchesSpecies && matchesLocation && matchesSex && matchesAge;
     });
-  }, [availablePets, query, speciesFilter, locationFilter, sexFilter]);
+  }, [availablePets, query, speciesFilter, locationFilter, sexFilter, ageFilter]);
 
   // Get unique values for filters
   const locations = useMemo(() => {
@@ -521,7 +535,47 @@ function Dashboard() {
               <MenuItem value="Bird">Birds</MenuItem>
               <MenuItem value="Rabbit">Rabbits</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
-            </TextField>
+              </TextField>
+            </Box>
+
+            {/* Age Filter */}
+            <Box>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  fontWeight: 600,
+                  color: '#374151',
+                  mb: 1,
+                  fontSize: '0.9rem',
+                }}
+              >
+                AGE
+              </Typography>
+              <TextField
+                select
+                fullWidth
+                value={ageFilter}
+                onChange={(e) => setAgeFilter(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: 2,
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+                    '&:hover': {
+                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
+                    },
+                    '&.Mui-focused': {
+                      boxShadow: '0 0 0 3px rgba(32, 178, 170, 0.1)',
+                    }
+                  }
+                }}
+              >
+                <MenuItem value="Any">Any</MenuItem>
+                <MenuItem value="Puppy">Puppy (0-1 year)</MenuItem>
+                <MenuItem value="Young">Young (1-3 years)</MenuItem>
+                <MenuItem value="Adult">Adult (3-7 years)</MenuItem>
+                <MenuItem value="Senior">Senior (7+ years)</MenuItem>
+              </TextField>
             </Box>
 
             {/* Gender Filter */}
