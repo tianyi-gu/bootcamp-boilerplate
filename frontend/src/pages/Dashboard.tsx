@@ -96,6 +96,11 @@ function Dashboard() {
     return data.filter(pet => !pet.adopted);
   }, [data]);
 
+  // Count adopted pets
+  const adoptedCount = useMemo(() => {
+    return data.filter(pet => pet.adopted).length;
+  }, [data]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return availablePets.filter((pet: Pet) => {
@@ -396,7 +401,7 @@ function Dashboard() {
                     color: '#FFFFFF',
                   }}
                 >
-                  {data.filter(pet => pet.adopted).length}
+                  {adoptedCount}
                 </Typography>
                 <Typography 
                   variant="h6" 

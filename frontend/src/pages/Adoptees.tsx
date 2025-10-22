@@ -52,7 +52,7 @@ function Adoptees() {
 
   useEffect(() => {
     loadAdoptedPets();
-  }, [location.pathname]);
+  }, [location.key]); // location.key changes on every navigation, even to the same path
 
   const petCards = adoptedPets.map((pet: Pet) => (
     <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={pet._id}>
