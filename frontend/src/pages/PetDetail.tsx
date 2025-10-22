@@ -240,11 +240,20 @@ function PetDetail() {
                       if (window.confirm(`Are you sure you want to adopt ${pet.name}? This will mark them as adopted.`)) {
                         try {
                           setAdopting(true);
-                          await updatePet(pet._id, { ...pet, adopted: true });
-                          setPet({ ...pet, adopted: true });
-                          alert(`Congratulations! ${pet.name} has been adopted! You can now see them in the Adoptees page.`);
-                          setTimeout(() => navigate('/adoptees'), 2000);
+                          // Create update object WITHOUT _id field
+                          const { _id, ...petDataWithoutId } = pet;
+                          const response = await updatePet(pet._id, { ...petDataWithoutId, adopted: true });
+                          console.log('Adoption response:', response.data);
+                          
+                          if (response.data.modifiedCount === 1) {
+                            setPet({ ...pet, adopted: true });
+                            alert(`Congratulations! ${pet.name} has been adopted! You can now see them in the Adoptees page.`);
+                            setTimeout(() => navigate('/adoptees'), 2000);
+                          } else {
+                            alert('Warning: Database update may have failed. Please check if the pet was adopted.');
+                          }
                         } catch (error) {
+                          console.error('Adoption error:', error);
                           alert('Error adopting pet. Please try again.');
                         } finally {
                           setAdopting(false);

@@ -1,9 +1,12 @@
 import * as path from 'path';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv'
+import { fileURLToPath } from 'url';
 
-const __dirname = path.resolve()
-dotenv.config({ path: path.resolve(__dirname, '.env') })
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// .env file is in the parent directory (root), not in backend/
+dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.ATLAS_URI, {

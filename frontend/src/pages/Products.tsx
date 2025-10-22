@@ -197,7 +197,7 @@ function Products() {
       <Navigation />
       
       <Container maxWidth="lg" sx={{ py: 5, flex: 1 }}>
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography 
             variant="h4" 
             sx={{ 
@@ -208,6 +208,19 @@ function Products() {
           >
             Pet Products & Supplies
           </Typography>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => setAddOpen(true)}
+            sx={{
+              backgroundColor: '#7B61FF',
+              '&:hover': {
+                backgroundColor: '#6849FF',
+              }
+            }}
+          >
+            Add Product
+          </Button>
         </Box>
 
         <Typography 
@@ -233,17 +246,9 @@ function Products() {
 
         {!loading && !error && products.length === 0 && (
           <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              No products available yet
+            <Typography variant="h6" color="text.secondary">
+              No products available yet. Click "Add Product" to get started!
             </Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => setAddOpen(true)}
-              sx={{ mt: 2 }}
-            >
-              Add First Product
-            </Button>
           </Box>
         )}
 

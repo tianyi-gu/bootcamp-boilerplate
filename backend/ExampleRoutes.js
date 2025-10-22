@@ -45,6 +45,11 @@ expressRouter.route("/").post(async (request, response) => {
 })
 
 expressRouter.route("/:id").put(async (request, response) => {
+    console.log('=== BACKEND UPDATE REQUEST ===');
+    console.log('Pet ID:', request.params.id);
+    console.log('Request body adopted value:', request.body.adopted);
+    console.log('Full request body:', JSON.stringify(request.body, null, 2));
+    
     let db = getDb()
     let mongoObject = {
         $set: {
@@ -60,7 +65,13 @@ expressRouter.route("/:id").put(async (request, response) => {
             featuredPetOfWeek: request.body.featuredPetOfWeek
         }
     }
+    
+    console.log('MongoDB update object adopted value:', mongoObject.$set.adopted);
     let data = await db.collection("pets").updateOne({_id: new ObjectId(request.params.id)}, mongoObject)
+    console.log('MongoDB response:', JSON.stringify(data, null, 2));
+    console.log('Modified count:', data.modifiedCount);
+    console.log('=== BACKEND UPDATE COMPLETE ===');
+    
     response.json(data)
 })
 

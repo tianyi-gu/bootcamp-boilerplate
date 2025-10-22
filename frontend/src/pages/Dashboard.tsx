@@ -141,11 +141,11 @@ function Dashboard() {
   }, [data]);
 
   const petCards = filtered.map((pet: Pet) => (
-    <Grid size={{ xs: 12, sm: 6, md: 6, lg: 6 }} key={pet._id}>
+    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={pet._id}>
       <Card 
         sx={{ 
           height: 320,
-          width: 320,
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
@@ -1001,15 +1001,46 @@ function Dashboard() {
                           onClick={async () => {
                             if (window.confirm(`Are you sure you want to adopt ${selectedPet.name}? This will mark them as adopted.`)) {
                               try {
-                                console.log('Adopting pet:', selectedPet._id, selectedPet);
-                                const response = await updatePet(selectedPet._id, { ...selectedPet, adopted: true });
-                                console.log('Update response:', response);
-                                setPetModalOpen(false);
-                                alert(`Congratulations! ${selectedPet.name} has been adopted! Redirecting to Adoptees page...`);
-                                await refreshPets(); // Refresh the data first
-                                setTimeout(() => navigate('/adoptees'), 500); // Navigate after a short delay
+                                console.log('=== ADOPTION PROCESS START ===');
+                                console.log('Pet ID:', selectedPet._id);
+                                console.log('Pet name:', selectedPet.name);
+                                console.log('Current adopted status:', selectedPet.adopted);
+                                
+                                // Send ONLY the fields that need to be updated
+                                const updatePayload = {
+                                  name: selectedPet.name,
+                                  breed: selectedPet.breed,
+                                  age: selectedPet.age,
+                                  species: selectedPet.species,
+                                  url: selectedPet.url,
+                                  description: selectedPet.description,
+                                  location: selectedPet.location,
+                                  sex: selectedPet.sex,
+                                  adopted: true,  // The only field we're changing
+                                  featuredPetOfWeek: selectedPet.featuredPetOfWeek || false
+                                };
+                                
+                                console.log('Sending update payload:', JSON.stringify(updatePayload, null, 2));
+                                
+                                const response = await updatePet(selectedPet._id, updatePayload);
+                                console.log('API Response Status:', response.status);
+                                console.log('API Response Data:', response.data);
+                                console.log('Modified count:', response.data.modifiedCount);
+                                console.log('=== ADOPTION PROCESS END ===');
+                                
+                                if (response.data.modifiedCount === 1) {
+                                  setPetModalOpen(false);
+                                  alert(`Congratulations! ${selectedPet.name} has been adopted! Redirecting to Adoptees page...`);
+                                  await refreshPets(); // Refresh the data first
+                                  setTimeout(() => navigate('/adoptees'), 500); // Navigate after a short delay
+                                } else {
+                                  console.error('Database was not updated! ModifiedCount:', response.data.modifiedCount);
+                                  console.error('Full response:', JSON.stringify(response.data));
+                                  alert('Warning: Database update may have failed. Please check if the pet was adopted.');
+                                }
                               } catch (error) {
-                                console.error('Error adopting pet:', error);
+                                console.error('=== ADOPTION ERROR ===');
+                                console.error('Error details:', error);
                                 alert('Error adopting pet. Please try again. Check console for details.');
                               }
                             }
